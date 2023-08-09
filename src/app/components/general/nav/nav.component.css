@@ -1,0 +1,15 @@
+:host {
+    font-size: var(--medium-font);
+    font-weight: bold;
+    height: 70px;
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+    position: relative;
+}
+
+:host.active {
+    transform: translateX(15px);
+}

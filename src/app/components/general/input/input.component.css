@@ -1,0 +1,30 @@
+:host {
+    position: relative;
+    display: block;
+    width: 100%;
+}
+
+.input {
+    padding: 10px;
+    font-size: 15px;
+    width: 100%;
+    background-color: rgb(var(--background-color));
+    color: rgb(var(--foreground-color));
+    border-radius: 10px;
+    outline: 0;
+}
+
+.error-input {
+    outline: 1px solid red;
+}
+
+.error {
+    position: absolute;
+    top: -12px;
+    right: 10px;
+    font-size: 13px;
+    color: red;
+    padding: 5px;
+    background-color: rgb(var(--background-color));
+    border-radius: 5px;
+}

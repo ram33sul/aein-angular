@@ -1,0 +1,5 @@
+:host {
+    color: rgb(var(--foreground-color));
+    font-size: var(--large-font);
+    font-weight: bold;
+}

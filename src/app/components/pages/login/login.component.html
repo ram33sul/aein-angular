@@ -1,0 +1,30 @@
+<div class="container">
+    <div class="headings-wrapper">
+        <div *ngIf="['login', 'signup'].includes(page)" routerLink="/login" [ngClass]="'heading ' + (page === 'login' ? 'active' : '')">
+            Login
+        </div>
+        <div *ngIf="['login', 'signup'].includes(page)" routerLink="/signup" [ngClass]="'heading ' + (page === 'signup' ? 'active' : '')">
+            Signup
+        </div>
+        <div *ngIf="['sendOtp', 'verifyOtp'].includes(page)" ngClass="heading otp-heading">
+            {{page === 'sendOtp' ? 'Login with OTP' : 'OTP send successfully: ' + displayTime(otpTimer)}}
+        </div>
+    </div>
+    <app-input [error]="usernameOrEmailError" *ngIf="page === 'login'" [value] = "usernameOrEmail" (onChange)="usernameOrEmail = $event" placeholder="Username or Email" />
+    <app-input [error]="nameError" *ngIf="page === 'signup'" [value] = "name" (onChange)="name = $event" placeholder="Name" />
+    <app-input [error]="usernameError" *ngIf="page === 'signup'" [value] = "username" (onChange)="username = $event" placeholder="Username" />
+    <app-input [error]="emailError" *ngIf="page === 'signup'" [value] = "email" (onChange)="email = $event" placeholder="Email" />
+    <app-input [error]="mobileError" *ngIf="['sendOtp', 'signup'].includes(page)" [value] = "mobile" (onChange)="mobile = $event" placeholder="Mobile" />
+    <app-input [error]="passwordError" *ngIf="['login', 'signup'].includes(page)" [value] = "password" (onChange)="password = $event" placeholder="Password" type="password" />
+    <app-input [error]="confirmPasswordError" *ngIf="page === 'signup'" [value] = "confirmPassword" (onChange)="confirmPassword = $event" placeholder="Confirm Password" type="password" />
+    <app-input [error]="otpError" *ngIf="page === 'verifyOtp'" [value] = "otp" (onChange)="otp = $event" placeholder="Enter OTP" />
+    <app-button [loading]="buttonLoading" (click) = "(page === 'login' ? handleLogin() : page === 'signup' ? handleSignup() : page === 'sendOtp' ? toVerifyOtpPage() : page === 'verifyOtp' ? handleVerifyOtp() : null)">
+        Submit
+    </app-button>
+    <app-button *ngIf="page === 'login'" type="option" (click) = "toSendOtpPage()" >
+        Login with OTP
+    </app-button>
+    <app-button *ngIf="['sendOtp', 'verifyOtp'].includes(page)" type="cancel" (click) = "handleCancel()" >
+        Cancel
+    </app-button>
+</div>

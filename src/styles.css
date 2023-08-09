@@ -1,1 +1,26 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+    --background-color: 0, 0, 0;
+    --foreground-color: 256, 256, 256;
+    --primary-color: 85, 133, 253;
+    --large-font: 22px;
+    --medium-font: 18px;
+    --small-font: 15px;
+    --very-small-font: 13px;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: rgb(var(--background-color));
+    color: rgb(var(--foreground-color));
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+* {
+    box-sizing: border-box;
+    user-select: none;
+}

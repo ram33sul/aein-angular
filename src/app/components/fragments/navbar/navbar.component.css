@@ -1,0 +1,61 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    width: 170px;
+    height: 100dvh;
+    background-color: rgb(var(--primary-color));
+    border: 10px solid rgb(var(--background-color));
+    border-radius: 20px;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    padding-top: 30px;
+    position: sticky;
+    top: 0;
+    left: 0;
+    border-right: 20px solid rgb(var(--background-color));
+}
+
+.navbar-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.active-marker {
+    position: absolute;
+    top: 0;
+    right: -20px;
+    height: 70px;
+    width: calc(100% + 25px);
+    background-color: rgb(var(--background-color));
+    border-radius: 20px 0 0 20px;
+}
+
+.active-marker::before {
+    display: block;
+    content: '';
+    width: 20px;
+    height: 20px;
+    border-bottom: 20px solid rgb(var(--background-color));
+    border-right: 20px solid rgb(var(--background-color));
+    border-bottom-right-radius: 40px;
+    right: -20px;
+    top: -20px;
+    position: absolute;
+}
+
+.active-marker::after {
+    display: block;
+    content: '';
+    width: 20px;
+    height: 20px;
+    border-top: 20px solid rgb(var(--background-color));
+    border-right: 20px solid rgb(var(--background-color));
+    border-top-right-radius: 40px;
+    right: -20px;
+    bottom: -20px;
+    position: absolute;
+}

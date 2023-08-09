@@ -1,0 +1,4 @@
+<div *ngIf="error !== ''" class="error">
+    {{error}}
+</div>
+<input [type]="type" [placeholder]="placeholder" (ngModelChange)="onChange.emit($event)" [ngModel]="value" [class]="'input ' + (error ? 'error-input' : '')">
