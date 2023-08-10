@@ -1,0 +1,17 @@
+<div *ngIf="message.type === 'profile'" [ngClass]="'type-profile ' + type" >
+    <app-small-profile *ngIf="userData" [heading]="userData.name" subHeading="Shared a profile" (onClick)="handleProfileClick(userData._id)" ></app-small-profile>
+    <app-loading *ngIf="userDataLoading" ></app-loading>
+</div>
+<div *ngIf="message.type !== 'profile'" [ngClass]="'type-text ' + type" [ngStyle]="{'background-color': backgroundColor}" >
+    <div [ngClass]="'content ' + type" [ngStyle]="{'color': color}">
+        {{message.content}}
+    </div>
+    <div [ngClass]="'time-seen ' + type">
+        <div *ngIf="(message.seen && message.from === userService.userData?._id)" class="seen">
+            seen
+        </div>
+        <div class="time">
+            {{message.sendAt | time}}
+        </div>
+    </div>
+</div>

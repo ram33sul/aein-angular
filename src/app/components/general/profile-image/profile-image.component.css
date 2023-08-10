@@ -1,0 +1,31 @@
+:host {
+    display: block;
+    width: fit-content;
+    height: fit-content;
+}
+
+.image {
+    min-width: 40px;
+    height: 40px;
+    border-radius: 50px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: rgba(var(--foreground-color), 0.4);
+    overflow: hidden;
+}
+
+.no-image {
+    height: 18px;
+    width: 18px;
+    background-color: rgba(var(--background-color));
+    border-radius: 30px;
+    margin: auto;
+    margin-top: 5px;
+}
+
+.no-image:last-child {
+    height: 40px;
+    width: 40px;
+    margin-top: 2px;
+}

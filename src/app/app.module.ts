@@ -8,19 +8,31 @@ import { ButtonComponent } from './components/general/button/button.component';
 import { LogoComponent } from './components/general/logo/logo.component';
 import { FormsModule } from '@angular/forms';
 import { GoogleLoginProvider } from 'angularx-social-login';
-import { HttpClientModule } from '@angular/common/http'
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http'
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './components/pages/home/home.component';
 import { NavbarComponent } from './components/fragments/navbar/navbar.component';
 import { NavComponent } from './components/general/nav/nav.component';
 import { MessagesComponent } from './components/pages/messages/messages.component';
 import { SmallProfileComponent } from './components/general/small-profile/small-profile.component';
+import { isLoggedOutGuard } from './guards/user/is-logged-out.guard';
+import { isLoggedInGuard } from './guards/user/is-logged-in.guard';
+import { TokenInterceptor } from './interceptors/token.interceptor';
+import { LoadingComponent } from './components/general/loading/loading.component';
+import { MessageComponent } from './components/general/message/message.component';
+import { TimePipe } from './pipes/time.pipe';
+import { ProfileImageComponent } from './components/general/profile-image/profile-image.component';
+import { MoodComponent } from './components/general/mood/mood.component';
+import { AlertsComponent } from './components/pages/alerts/alerts.component';
+import { SettingsComponent } from './components/pages/settings/settings.component';
+import { ProfileComponent } from './components/pages/profile/profile.component';
 
 const appRoutes: Routes = [
-  {path: 'login', component: LoginComponent},
-  {path: 'signup', component: LoginComponent},
-  {path: 'messages', component: MessagesComponent},
-  {path: '', component: HomeComponent}
+  {path: 'login', component: LoginComponent, canActivate: [isLoggedOutGuard]},
+  {path: 'signup', component: LoginComponent, canActivate: [isLoggedOutGuard]},
+  {path: 'messages', component: MessagesComponent, canActivate: [isLoggedInGuard]},
+  {path: 'home', component: HomeComponent, canActivate: [isLoggedInGuard]},
+  {path: '', component: HomeComponent, canActivate: [isLoggedInGuard]}
 ]
 
 @NgModule({
@@ -34,7 +46,15 @@ const appRoutes: Routes = [
     NavbarComponent,
     NavComponent,
     MessagesComponent,
-    SmallProfileComponent
+    SmallProfileComponent,
+    LoadingComponent,
+    MessageComponent,
+    TimePipe,
+    ProfileImageComponent,
+    MoodComponent,
+    AlertsComponent,
+    SettingsComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -42,18 +62,7 @@ const appRoutes: Routes = [
     HttpClientModule,
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [{
-    provide: 'SocialAuthServiceConfig',
-    useValue: {
-      autoLogin: false,
-      providers: [
-        {
-          id: GoogleLoginProvider.PROVIDER_ID,
-          provider: new GoogleLoginProvider('')
-        }
-      ]
-    }
-  }],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

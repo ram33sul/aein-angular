@@ -1,0 +1,22 @@
+:host {
+    min-height: 100%;
+    min-width: 100%;
+    animation: blink 1s infinite ease;
+    display: block;
+    position: absolute;
+    z-index: 10;
+    top: 0;
+    left: 0;
+}
+
+@keyframes blink {
+    0% {
+        background-color: rgba(var(--foreground-color), 0);
+    }
+    50% {
+        background-color: rgba(var(--foreground-color), 0.3);
+    }
+    100% {
+        background-color: rgba(var(--foreground-color), 0);
+    }
+}

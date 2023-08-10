@@ -1,22 +1,47 @@
 <div class="message-box">
-    no messages yet
+    <div *ngIf="error" class="error show-message">
+        {{error}}
+    </div>
+    <div *ngIf="!userId && !messageDataLoading && !error" class="show-message">
+        Select an User to start messaging
+    </div>
+    <div *ngIf="userData" class="profile-wrapper">
+        <app-profile-image [size]="40" [imageSrc]="userData.profilePicUrl" ></app-profile-image>
+        <div class="name-online">
+            <div class="name">
+                {{userData.name}}
+            </div>
+            <div *ngIf="!isOnlineLoading && isOnline" class="online green">
+                Online
+            </div>
+            <div *ngIf="!isOnlineLoading && !isOnline" class="online">
+                Offline
+            </div>
+        </div>
+    </div>
+    <div class="messages-wrapper" #messagesWrapper>
+        <div *ngIf="userId && !messageData.length && !messageDataLoading && !error" class="show-message">
+            No messages yet!
+        </div>
+        <div *ngFor="let message of messageData">
+            <app-message [message]="message" ></app-message>
+        </div>
+    </div>
+    <div *ngIf="userId" class="send-wrapper">
+        <div class="moods">
+            <app-mood *ngFor="let mood of moods" (onClick)="handleCurrentMood(mood)" [active]="currentMood?._id === mood._id" [mood]="mood" ></app-mood>
+        </div>
+        <div class="send">
+            <app-input [value]="message" (onChange)="message = $event" placeholder="Type here.." />
+            <div class="send-button" (click)="sendMessage()" >
+                send
+                <app-loading *ngIf="sendLoading"></app-loading>
+            </div>
+        </div>
+    </div>
+    <app-loading *ngIf="messageDataLoading"></app-loading>
 </div>
 <div class="list">
-    <app-small-profile heading="Lionel Messi dfd df" subHeading="this ijd dh adhf djhad fjahdf jadf ajdfhjafhd jadh jasdhf da"></app-small-profile>
-    <app-small-profile heading="Lionel Messi dfd df" subHeading="this ijd dh adhf djhad fjahdf jadf ajdfhjafhd jadh jasdhf da"></app-small-profile>
-    <app-small-profile heading="Lionel Messi dfd df" subHeading="this ijd dh adhf djhad fjahdf jadf ajdfhjafhd jadh jasdhf da"></app-small-profile>
-    <app-small-profile heading="Lionel Messi dfd df" subHeading="this ijd dh adhf djhad fjahdf jadf ajdfhjafhd jadh jasdhf da"></app-small-profile>
-    <app-small-profile heading="Lionel Messi dfd df" subHeading="this ijd dh adhf djhad fjahdf jadf ajdfhjafhd jadh jasdhf da"></app-small-profile>
-    <app-small-profile heading="Lionel Messi dfd df" subHeading="this ijd dh adhf djhad fjahdf jadf ajdfhjafhd jadh jasdhf da"></app-small-profile>
-    <app-small-profile heading="Lionel Messi dfd df" subHeading="this ijd dh adhf djhad fjahdf jadf ajdfhjafhd jadh jasdhf da"></app-small-profile>
-    <app-small-profile heading="Lionel Messi dfd df" subHeading="this ijd dh adhf djhad fjahdf jadf ajdfhjafhd jadh jasdhf da"></app-small-profile>
-    <app-small-profile heading="Lionel Messi dfd df" subHeading="this ijd dh adhf djhad fjahdf jadf ajdfhjafhd jadh jasdhf da"></app-small-profile>
-    <app-small-profile heading="Lionel Messi dfd df" subHeading="this ijd dh adhf djhad fjahdf jadf ajdfhjafhd jadh jasdhf da"></app-small-profile>
-    <app-small-profile heading="Lionel Messi dfd df" subHeading="this ijd dh adhf djhad fjahdf jadf ajdfhjafhd jadh jasdhf da"></app-small-profile>
-    <app-small-profile heading="Lionel Messi dfd df" subHeading="this ijd dh adhf djhad fjahdf jadf ajdfhjafhd jadh jasdhf da"></app-small-profile>
-    <app-small-profile heading="Lionel Messi dfd df" subHeading="this ijd dh adhf djhad fjahdf jadf ajdfhjafhd jadh jasdhf da"></app-small-profile>
-    <app-small-profile heading="Lionel Messi dfd df" subHeading="this ijd dh adhf djhad fjahdf jadf ajdfhjafhd jadh jasdhf da"></app-small-profile>
-    <app-small-profile heading="Lionel Messi dfd df" subHeading="this ijd dh adhf djhad fjahdf jadf ajdfhjafhd jadh jasdhf da"></app-small-profile>
-    <app-small-profile heading="Lionel Messi dfd df" subHeading="this ijd dh adhf djhad fjahdf jadf ajdfhjafhd jadh jasdhf da"></app-small-profile>
-    <app-small-profile heading="Lionel Messi dfd df" subHeading="this ijd dh adhf djhad fjahdf jadf ajdfhjafhd jadh jasdhf da"></app-small-profile>
+    <app-small-profile [active]="message.foreignUser._id === userId" *ngFor="let message of overallMessages" [heading]="message.foreignUser.name" [subHeading]="message.content" [imageSrc]="message.foreignUser.profilePicUrl" [subHeadingActive]="!message.seen && message.to === userService.userData?._id" [notificationCount]="message.newMessageCount" (onClick)="handleOverallClick(message.foreignUser._id)" ></app-small-profile>
+    <app-loading *ngIf="overallMessagesLoading" ></app-loading>
 </div> 

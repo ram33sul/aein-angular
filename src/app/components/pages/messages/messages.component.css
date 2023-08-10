@@ -4,25 +4,130 @@
     flex-grow: 1;
     padding: 10px;
     max-height: 100dvh;
+    position: relative;
 }
 
 .message-box {
     border: 1px solid rgba(128, 128, 128, 0.3);
     height: 100%;
     flex-grow: 1;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.messages-wrapper {
+    flex-grow: 1;
+    overflow-y: scroll;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.messages-wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+.profile-wrapper {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    max-width: 100%;
+    justify-content: center;
+    align-items: center;
+    min-height: 60px;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.4);
+}
+
+.profile-image {
+    width: 40px;
+    height: 40px;
+    background-color: red;
+}
+
+.name {
+    font-size: var(--medium-font);
+}
+
+.online {
+    font-size: 13px;
+}
+
+.online.green {
+    color: green;
+}
+
+.moods {
+    width: 100%;
+    overflow-x: scroll;
+    display: flex;
+    gap: 10px;
+}
+
+.moods::-webkit-scrollbar {
+    display: none;
+}
+
+.send-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 10px;
+}
+
+.send {
+    display: flex;
+    gap: 10px;
+}
+
+.send-button {
+    background-color: rgba(var(--foreground-color), 0.9);
+    color: rgb(var(--background-color));
+    border-radius: 10px;
+    width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 13px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.send-button:hover {
+    opacity: 0.5;
+}
+
+.send-button:active {
+    opacity: 0.75;
 }
 
 .list {
     width: 300px;
     max-height: 100%;
     overflow-y: scroll;
-    padding: 20px;
+    padding: 20px 10px;
     background-color: rgba(128, 128, 128, 0.2);
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 5px;
+    position: relative;
+    border-radius: 0 10px 10px 0;
 }
 
 .list::-webkit-scrollbar {
     display: none;
+}
+
+.show-message {
+    margin: auto;
+    max-width: 400px;
+    width: fit-content;
+    margin-top: 40%;
+}
+
+.error {
+    color: red;
 }

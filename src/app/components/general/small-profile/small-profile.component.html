@@ -1,9 +1,12 @@
-<div class="image" [ngStyle]="{'background-image': 'url('+imageSrc+')'}"></div>
+<app-profile-image [imageSrc]="imageSrc" ></app-profile-image>
 <div class="texts-wrapper">
     <div class="heading">
         {{heading}}
     </div>
-    <div class="sub-heading">
+    <div class="sub-heading" [ngClass]="subHeadingActive ? 'sub-heading-active' : ''" >
         {{subHeading}}
     </div>
+</div>
+<div *ngIf="notificationCount" class="notification-count">
+    {{notificationCount}}
 </div>

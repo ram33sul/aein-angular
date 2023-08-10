@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { MessageService } from './services/messages/message.service';
+import { UserService } from './services/user/user.service';
 
 @Component({
   selector: 'app-root',
@@ -17,9 +19,11 @@ export class AppComponent {
   ngOnInit() {
     this.router.events.subscribe((event) => {
       if(event instanceof NavigationEnd){
-        const path = event.urlAfterRedirects.split('/')[1];
+        const path = event.url.split('/')[1];
         if(!["login", "signup"].includes(path)){
           this.showNavbar = true;
+        } else {
+          this.showNavbar = false;
         }
       }
     })

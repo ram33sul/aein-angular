@@ -1,0 +1,4 @@
+<div class="image" [ngStyle]="{'background-image': 'url('+imageSrc+')', 'min-width': size + 'px', 'min-height': size + 'px', 'border-radius': size + 'px'}">
+    <div *ngIf="!imageSrc" [ngStyle]="{width: (size/2.3) + 'px', height: (size/2.3) + 'px'}" class="no-image"></div>
+    <div *ngIf="!imageSrc" [ngStyle]="{width: size + 'px', height: size + 'px'}" class="no-image"></div>
+</div>

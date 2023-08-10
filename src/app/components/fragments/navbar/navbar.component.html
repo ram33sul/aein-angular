@@ -1,5 +1,5 @@
 <app-logo></app-logo>
 <div class="navbar-wrapper">
-    <div class="active-marker"></div>
-    <app-nav *ngFor="let nav of navs" [title]="nav" [routerLink] = "'/' + nav" />
+    <div class="active-marker" [ngStyle]="{top: activeMarkerPos}" ></div>
+    <app-nav *ngFor="let nav of navs" [title]="nav" [routerLink] = "'/' + nav" [active]="nav === activePage" />
 </div>

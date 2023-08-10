@@ -1,0 +1,76 @@
+:host {
+    width: 100%;
+    height: fit-content;
+    display: block;
+}
+
+.type-text {
+    display: flex;
+    gap: 5px;
+    padding: 10px;
+    width: fit-content;
+    max-width: 90%;
+    border-radius: 10px;
+    flex-direction: column;
+}
+
+.type-text.send {
+    background-color: rgb(var(--foreground-color));
+    color: rgb(var(--background-color));
+    margin-left: auto;
+    border-bottom-right-radius: 0;
+}
+
+.type-text.recieve {
+    background-color: rgba(var(--foreground-color), 0.1);
+    margin-right: auto;
+    border-bottom-left-radius: 0;
+}
+
+.type-profile {
+    border: 1px solid rgba(var(--foreground-color), 0.2);
+    min-width: 100px;
+    height: fit-content;
+    min-height: 50px;
+    width: fit-content;
+    border-radius: 10px;
+}
+
+.type-profile.send {
+    margin-left: auto;
+    border-bottom-right-radius: 0;
+}
+
+.type-profile.recieve {
+    margin-right: auto;
+    border-bottom-left-radius: 0;
+}
+
+.content {
+    font-size: 15px;
+    width: 100%;
+}
+
+.time-seen {
+    display: flex;
+    gap: 10px;
+    width: fit-content;
+    font-size: 12px;
+    max-width: fit-content;
+}
+
+.time-seen.send {
+    margin-left: auto;
+}
+
+.time-seen.receive {
+    margin-right: auto;
+}
+
+.time {
+    font-weight: bold;
+}
+
+.seen {
+    opacity: 0.7d;
+}

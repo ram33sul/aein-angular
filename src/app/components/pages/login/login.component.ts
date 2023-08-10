@@ -3,7 +3,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { UserService } from 'src/app/services/user/user.service';
-import { LoginForm } from 'src/interfaces/user';
+import { LoginForm, UserData } from 'src/interfaces/user';
 import { isExistObject } from 'src/validate/isExist';
 
 @Component({
@@ -41,6 +41,13 @@ export class LoginComponent {
     this.page = this.router.url.split('/')[1] as ('login' | 'signup' | 'sendOtp' | 'verifyOtp')
   }
 
+  loggedIn(data: {user: UserData, token: string}) {
+    this.userService.userData = data.user;
+    this.userService.token = data.token;
+    this.userService.storeToken()
+    this.buttonLoading = false;
+    this.router.navigate(['/'])
+  }
 
   handleLogin() {
     this.clearErrors()
@@ -51,13 +58,10 @@ export class LoginComponent {
     this.buttonLoading = true;
     this.userService.login(data).subscribe({
       next: (response) => {
-        this.userService.userData = response.user;
-        this.userService.token = response.token;
-        this.buttonLoading = false;
-        this.router.navigate(['/'])
+        this.loggedIn(response)
       },
       error: (error) => {
-        this.handleErrors(error.error)
+        this.handleErrors([error.error])
         this.buttonLoading = false;
       },
     });
@@ -87,10 +91,7 @@ export class LoginComponent {
     this.buttonLoading = true;
     this.userService.signup(data).subscribe({
       next: (response) => {
-        this.userService.userData = response.user;
-        this.userService.token = response.token;
-        this.buttonLoading = false;
-        this.router.navigate(['/'])
+        this.loggedIn(response)
       },
       error: (error) => {
         this.handleErrors(error.error)
@@ -100,6 +101,7 @@ export class LoginComponent {
   }
 
   handleErrors(errors: { field: string; message: string }[]) {
+    if(!Array.isArray(errors)) return;
     errors.forEach(({ field, message }) => {
       switch (field) {
         case 'usernameOrEmail':
@@ -166,9 +168,7 @@ export class LoginComponent {
     this.buttonLoading = true;
     this.userService.verifyOtp({mobile: parseInt(this.mobile), otp: this.otp}).subscribe({
       next: (response) => {
-        this.userService.userData = response.user;
-        this.userService.token = response.token;
-        this.buttonLoading = false;
+        this.loggedIn(response)
       },
       error: (error) => {
         this.otpError = error.error.message
