@@ -32,6 +32,9 @@ const appRoutes: Routes = [
   {path: 'signup', component: LoginComponent, canActivate: [isLoggedOutGuard]},
   {path: 'messages', component: MessagesComponent, canActivate: [isLoggedInGuard]},
   {path: 'home', component: HomeComponent, canActivate: [isLoggedInGuard]},
+  {path: 'alerts', component: AlertsComponent, canActivate: [isLoggedInGuard]},
+  {path: 'settings', component: SettingsComponent, canActivate: [isLoggedInGuard]},
+  {path: 'profile', component: ProfileComponent, canActivate: [isLoggedInGuard]},
   {path: '', component: HomeComponent, canActivate: [isLoggedInGuard]}
 ]
 

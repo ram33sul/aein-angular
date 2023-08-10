@@ -1,0 +1,67 @@
+:host {
+    display: flex;
+    flex-grow: 1;
+    padding: 10px;
+    flex-direction: column;
+    gap: 20px;
+    padding-top: 30px;
+}
+
+.profile-wrapper {
+    display: flex;
+    gap: 20px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.username-followers {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.username-name {
+    display: flex;
+    flex-direction: column;
+}
+
+.username {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.name {
+    font-size: 15px;
+}
+
+.followers-following {
+    display: flex;
+    gap: 30px;
+}
+
+.followers {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.count {
+    font-size: 30px;
+}
+
+.followers-text {
+    font-size: 14px;
+}
+
+.buttons-wrapper {
+    display: flex;
+    gap: 20px;
+}
+
+.bio-wrapper {
+    width: 100%;
+}
+
+.bio-heading {
+    opacity: 0.6;
+}

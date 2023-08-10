@@ -1,1 +1,47 @@
-<p>profile works!</p>
+<div *ngIf="userData" class="profile-wrapper">
+   <app-profile-image [imageSrc]="userData.profilePicUrl" [size]="120" ></app-profile-image>
+    <div class="username-followers">
+        <div class="username-name">
+            <div class="username">
+                {{userData.username}}
+            </div>
+            <div class="name">
+                {{userData.name}}
+            </div>
+        </div>
+        <div class="followers-following">
+            <div class="followers">
+                <div class="count">
+                    {{userData.followers.length}}
+                </div>
+                <div class="followers-text">
+                    followers
+                </div>
+            </div>
+            <div class="followers">
+                <div class="count">
+                    {{userData.following.length}}
+                </div>
+                <div class="followers-text">
+                    followings
+                </div>
+            </div>
+        </div>
+    </div>    
+</div>
+<div *ngIf="userData" class="buttons-wrapper">
+    <app-button *ngIf="userData._id !== userService?.userData?._id && !userService?.userData?.following?.includes(userData._id)" type="submit" >FOLLOW</app-button>
+    <app-button *ngIf="userData._id !== userService?.userData?._id && userService?.userData?.following?.includes(userData._id)" type="submit" >UNFOLLOW</app-button>
+    <app-button *ngIf="userData._id !== userService?.userData?._id" type="option" >MESSAGE</app-button>
+    <app-button *ngIf="userData._id === userService?.userData?._id" type="option" >EDIT</app-button>
+    <app-button type="option" >SHARE</app-button>
+    <app-button *ngIf="userData._id === userService?.userData?._id" type="reject" >LOGOUT</app-button>
+</div>
+<div *ngIf="userData && userData.bio" class="bio-wrapper">
+    <div class="bio-heading">
+        Bio:
+    </div>
+    <div class="bio">
+        {{userData.bio}}
+    </div>
+</div>

@@ -5,7 +5,7 @@
     <div *ngIf="!userId && !messageDataLoading && !error" class="show-message">
         Select an User to start messaging
     </div>
-    <div *ngIf="userData" class="profile-wrapper">
+    <div *ngIf="userData" class="profile-wrapper" routerLink="/profile" [queryParams]="{userId: userData._id}" >
         <app-profile-image [size]="40" [imageSrc]="userData.profilePicUrl" ></app-profile-image>
         <div class="name-online">
             <div class="name">
