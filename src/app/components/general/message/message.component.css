@@ -6,7 +6,7 @@
 }
 
 :host.active {
-    background-color: rgba(var(--foreground-color), 0.2);
+    background-color: rgba(var(--foreground-color), 0.3);
 }
 
 .type-text {

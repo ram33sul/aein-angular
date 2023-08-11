@@ -4,6 +4,8 @@ import { API, TOKEN_NAME } from 'src/environments';
 import { LoginForm, SignupForm, UserData } from 'src/interfaces/user';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { MessageService } from '../messages/message.service';
+import { AlertService } from '../alerts/alert.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +17,9 @@ export class UserService {
 
   constructor(
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private messageService: MessageService,
+    private alertService: AlertService
   ) { }
 
   login(data: LoginForm){
@@ -50,6 +54,8 @@ export class UserService {
       this.http.get<{userData: UserData}>(`${API}/user/verifyUser`).subscribe({
         next: (response) => {
           this.userData = response.userData;
+          this.messageService.connectMessagesWs(this.token);
+          this.alertService.connectToAlerts(this.token)
           resolve(true)
         },
         error: (err) => {

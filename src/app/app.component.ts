@@ -1,8 +1,5 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { MessageService } from './services/messages/message.service';
-import { UserService } from './services/user/user.service';
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -14,7 +11,6 @@ export class AppComponent {
 
   constructor(
     private router: Router,
-    private messageService: MessageService
   ) {}
 
   ngOnInit() {
@@ -28,6 +24,6 @@ export class AppComponent {
         }
       }
     })
-    this.messageService.connectMessagesWs()
   }
+
 }

@@ -1,5 +1,6 @@
 import { Component, NgZone } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { AlertService } from 'src/app/services/alerts/alert.service';
 import { UserService } from 'src/app/services/user/user.service';
 
 type Navs = typeof NavbarComponent.prototype.navs[number]
@@ -18,6 +19,7 @@ export class NavbarComponent {
 
   constructor(
     private router: Router,
+    private alertService: AlertService
   ) {}
 
   ngOnInit() {

@@ -58,7 +58,7 @@ export class MessagesComponent {
   }
 
   setUpWebSocket() {
-    this.messageService.connectMessagesWs()
+    // this.messageService.connectMessagesWs()
     const ws = this.messageService.messageWs;
     if(ws){
       ws.onopen = this.handleWebSocketOpen.bind(this);
@@ -73,7 +73,9 @@ export class MessagesComponent {
     this.router.events.subscribe((event) => {
       if(event instanceof NavigationEnd){
         this.userId = event.url.split('userId=')[1]?.split('&')[0]
-        this.retrieveUserMessages()
+        if(this.messageService.messageWs){
+          this.retrieveUserMessages()
+        }
       }
     })
   }
@@ -98,6 +100,7 @@ export class MessagesComponent {
           type: 'getMessages'
         })
       )
+      this.checkOnlineStatus();
     } else {
       this.messageDataLoading = false;
     }
@@ -108,7 +111,6 @@ export class MessagesComponent {
         this.userDataLoading = false;
       })
     }
-    this.checkOnlineStatus();
     
   }
 

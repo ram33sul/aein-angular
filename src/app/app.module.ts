@@ -27,6 +27,7 @@ import { AlertsComponent } from './components/pages/alerts/alerts.component';
 import { SettingsComponent } from './components/pages/settings/settings.component';
 import { ProfileComponent } from './components/pages/profile/profile.component';
 import { EditProfileComponent } from './components/pages/edit-profile/edit-profile.component';
+import { PostComponent } from './components/fragments/post/post.component';
 
 const appRoutes: Routes = [
   {path: 'login', component: LoginComponent, canActivate: [isLoggedOutGuard]},
@@ -60,7 +61,8 @@ const appRoutes: Routes = [
     AlertsComponent,
     SettingsComponent,
     ProfileComponent,
-    EditProfileComponent
+    EditProfileComponent,
+    PostComponent
   ],
   imports: [
     BrowserModule,
