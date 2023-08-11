@@ -18,13 +18,13 @@
     <app-input [error]="passwordError" *ngIf="['login', 'signup'].includes(page)" [value] = "password" (onChange)="password = $event" placeholder="Password" type="password" />
     <app-input [error]="confirmPasswordError" *ngIf="page === 'signup'" [value] = "confirmPassword" (onChange)="confirmPassword = $event" placeholder="Confirm Password" type="password" />
     <app-input [error]="otpError" *ngIf="page === 'verifyOtp'" [value] = "otp" (onChange)="otp = $event" placeholder="Enter OTP" />
-    <app-button [loading]="buttonLoading" (click) = "(page === 'login' ? handleLogin() : page === 'signup' ? handleSignup() : page === 'sendOtp' ? toVerifyOtpPage() : page === 'verifyOtp' ? handleVerifyOtp() : null)">
+    <app-button [loading]="buttonLoading" (onClick) = "(page === 'login' ? handleLogin() : page === 'signup' ? handleSignup() : page === 'sendOtp' ? toVerifyOtpPage() : page === 'verifyOtp' ? handleVerifyOtp() : null)">
         Submit
     </app-button>
-    <app-button *ngIf="page === 'login'" type="option" (click) = "toSendOtpPage()" >
+    <app-button *ngIf="page === 'login'" type="option" (onClick) = "toSendOtpPage()" >
         Login with OTP
     </app-button>
-    <app-button *ngIf="['sendOtp', 'verifyOtp'].includes(page)" type="cancel" (click) = "handleCancel()" >
+    <app-button *ngIf="['sendOtp', 'verifyOtp'].includes(page)" type="cancel" (onClick) = "handleCancel()" >
         Cancel
     </app-button>
 </div>

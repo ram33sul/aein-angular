@@ -8,5 +8,5 @@
     </div>
 </div>
 <div *ngIf="notificationCount" class="notification-count">
-    {{notificationCount}}
+    {{notificationCount > 9 ? '9+' : notificationCount}}
 </div>

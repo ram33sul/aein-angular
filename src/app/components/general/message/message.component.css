@@ -2,6 +2,11 @@
     width: 100%;
     height: fit-content;
     display: block;
+    padding: 5px 10px;
+}
+
+:host.active {
+    background-color: rgba(var(--foreground-color), 0.2);
 }
 
 .type-text {
@@ -12,6 +17,7 @@
     max-width: 90%;
     border-radius: 10px;
     flex-direction: column;
+    cursor: pointer;
 }
 
 .type-text.send {

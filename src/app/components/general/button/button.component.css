@@ -1,5 +1,5 @@
 :host {
-    flex-grow: 1;
+    /* flex-grow: 1; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -10,6 +10,7 @@
     color: rgb(var(--background-color));
     transition: all 0.2s;
     cursor: pointer;
+    width: 100%;
 }
 
 :host.accept {

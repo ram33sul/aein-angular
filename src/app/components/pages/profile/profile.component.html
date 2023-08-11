@@ -30,12 +30,12 @@
     </div>    
 </div>
 <div *ngIf="userData" class="buttons-wrapper">
-    <app-button *ngIf="userData._id !== userService?.userData?._id && !userService?.userData?.following?.includes(userData._id)" type="submit" >FOLLOW</app-button>
-    <app-button *ngIf="userData._id !== userService?.userData?._id && userService?.userData?.following?.includes(userData._id)" type="submit" >UNFOLLOW</app-button>
-    <app-button *ngIf="userData._id !== userService?.userData?._id" type="option" >MESSAGE</app-button>
-    <app-button *ngIf="userData._id === userService?.userData?._id" type="option" >EDIT</app-button>
-    <app-button type="option" >SHARE</app-button>
-    <app-button *ngIf="userData._id === userService?.userData?._id" type="reject" >LOGOUT</app-button>
+    <app-button *ngIf="userData._id !== userService?.userData?._id && !userService?.userData?.following?.includes(userData._id)" (onClick)="handleFollow()" type="submit" [loading]="followLoading" >FOLLOW</app-button>
+    <app-button *ngIf="userData._id !== userService?.userData?._id && userService?.userData?.following?.includes(userData._id)" (onClick)="handleUnfollow()" type="option" [loading]="followLoading" >UNFOLLOW</app-button>
+    <app-button *ngIf="userData._id !== userService?.userData?._id" routerLink="/messages" [queryParams]="{userId: userData._id}" type="option" >MESSAGE</app-button>
+    <app-button *ngIf="userData._id === userService?.userData?._id" type="option" routerLink="/edit-profile" >EDIT</app-button>
+    <app-button (onClick)="handleShare()" type="option" >SHARE</app-button>
+    <app-button *ngIf="userData._id === userService?.userData?._id" type="reject" (onClick)="handleLogout()" >LOGOUT</app-button>
 </div>
 <div *ngIf="userData && userData.bio" class="bio-wrapper">
     <div class="bio-heading">

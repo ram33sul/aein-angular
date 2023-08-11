@@ -26,6 +26,7 @@ import { MoodComponent } from './components/general/mood/mood.component';
 import { AlertsComponent } from './components/pages/alerts/alerts.component';
 import { SettingsComponent } from './components/pages/settings/settings.component';
 import { ProfileComponent } from './components/pages/profile/profile.component';
+import { EditProfileComponent } from './components/pages/edit-profile/edit-profile.component';
 
 const appRoutes: Routes = [
   {path: 'login', component: LoginComponent, canActivate: [isLoggedOutGuard]},
@@ -35,6 +36,7 @@ const appRoutes: Routes = [
   {path: 'alerts', component: AlertsComponent, canActivate: [isLoggedInGuard]},
   {path: 'settings', component: SettingsComponent, canActivate: [isLoggedInGuard]},
   {path: 'profile', component: ProfileComponent, canActivate: [isLoggedInGuard]},
+  {path: 'edit-profile', component: EditProfileComponent, canActivate: [isLoggedInGuard]},
   {path: '', component: HomeComponent, canActivate: [isLoggedInGuard]}
 ]
 
@@ -57,7 +59,8 @@ const appRoutes: Routes = [
     MoodComponent,
     AlertsComponent,
     SettingsComponent,
-    ProfileComponent
+    ProfileComponent,
+    EditProfileComponent
   ],
   imports: [
     BrowserModule,

@@ -1,3 +1,7 @@
+:host {
+    margin: auto;
+}
+
 .container {
     width: 96dvw;
     max-width: 500px;

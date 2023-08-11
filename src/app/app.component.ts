@@ -13,7 +13,8 @@ export class AppComponent {
   showNavbar = false;
 
   constructor(
-    private router: Router
+    private router: Router,
+    private messageService: MessageService
   ) {}
 
   ngOnInit() {
@@ -27,5 +28,6 @@ export class AppComponent {
         }
       }
     })
+    this.messageService.connectMessagesWs()
   }
 }

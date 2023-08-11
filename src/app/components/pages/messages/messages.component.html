@@ -5,7 +5,7 @@
     <div *ngIf="!userId && !messageDataLoading && !error" class="show-message">
         Select an User to start messaging
     </div>
-    <div *ngIf="userData" class="profile-wrapper" routerLink="/profile" [queryParams]="{userId: userData._id}" >
+    <div *ngIf="userData && !selectedMessages.length" class="profile-wrapper" routerLink="/profile" [queryParams]="{userId: userData._id}" >
         <app-profile-image [size]="40" [imageSrc]="userData.profilePicUrl" ></app-profile-image>
         <div class="name-online">
             <div class="name">
@@ -19,12 +19,17 @@
             </div>
         </div>
     </div>
+    <div *ngIf="selectedMessages.length" class="options-wrapper">
+        <app-button (onClick)="selectedMessages = []" type="option">Unselect</app-button>
+        <app-button [loading]="deleteMessagesLoading" (onClick)="deleteMessages()" type="option">Delete</app-button>
+        <app-button>Post</app-button>
+    </div>
     <div class="messages-wrapper" #messagesWrapper>
         <div *ngIf="userId && !messageData.length && !messageDataLoading && !error" class="show-message">
             No messages yet!
         </div>
         <div *ngFor="let message of messageData">
-            <app-message [message]="message" ></app-message>
+            <app-message (onClick)="handleSelectMessage($event)" [message]="message" [active]="isMessageSelected(message._id)" ></app-message>
         </div>
     </div>
     <div *ngIf="userId" class="send-wrapper">
@@ -41,7 +46,14 @@
     </div>
     <app-loading *ngIf="messageDataLoading"></app-loading>
 </div>
-<div class="list">
-    <app-small-profile [active]="message.foreignUser._id === userId" *ngFor="let message of overallMessages" [heading]="message.foreignUser.name" [subHeading]="message.content" [imageSrc]="message.foreignUser.profilePicUrl" [subHeadingActive]="!message.seen && message.to === userService.userData?._id" [notificationCount]="message.newMessageCount" (onClick)="handleOverallClick(message.foreignUser._id)" ></app-small-profile>
-    <app-loading *ngIf="overallMessagesLoading" ></app-loading>
+<div class="list-wrapper">
+    <app-input (onChange)="handleSearch($event)" placeholder="Search.." />
+    <div *ngIf="!showSearchResults" class="list">
+        <app-small-profile [active]="message.foreignUser._id === userId" *ngFor="let message of overallMessages" [heading]="message.foreignUser.name" [subHeading]="message.content" [imageSrc]="message.foreignUser.profilePicUrl" [subHeadingActive]="!message.seen && message.to === userService.userData?._id" [notificationCount]="message.newMessageCount" (onClick)="handleOverallClick(message.foreignUser._id)" ></app-small-profile>
+        <app-loading *ngIf="overallMessagesLoading" ></app-loading>
+    </div>
+    <div *ngIf="showSearchResults" class="list">
+        <app-small-profile *ngFor="let user of searchResults" [heading]="user.username" [subHeading]="user.name" [imageSrc]="user.profilePicUrl" (onClick)="handleOverallClick(user._id)" ></app-small-profile>
+        <app-loading *ngIf="searchLoading"></app-loading>
+    </div>
 </div> 

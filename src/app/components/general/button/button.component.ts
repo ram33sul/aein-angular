@@ -1,4 +1,4 @@
-import { Component, EventEmitter, HostBinding, HostListener, Input } from '@angular/core';
+import { Component, EventEmitter, HostBinding, HostListener, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-button',
@@ -6,7 +6,7 @@ import { Component, EventEmitter, HostBinding, HostListener, Input } from '@angu
   styleUrls: ['./button.component.css']
 })
 export class ButtonComponent {
-  @Input() onClick = new EventEmitter()
+  @Output() onClick = new EventEmitter()
   @Input() type: 'submit' | 'reject' | 'accept' | 'option' | 'cancel' = 'submit';
   @Input() loading = false;
 

@@ -40,6 +40,7 @@ export class UserService {
 
   logout() {
     this.token = '';
+    this.userData = null;
     localStorage.removeItem(TOKEN_NAME);
     this.router.navigate(['/login'])
   }

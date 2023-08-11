@@ -1,6 +1,7 @@
 import { Component, ElementRef, NgZone, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { MessageService } from 'src/app/services/messages/message.service';
+import { ProfileService } from 'src/app/services/profile/profile.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { Message, OverallMessage, Mood } from 'src/interfaces/message';
 import { UserData } from 'src/interfaces/user';
@@ -14,6 +15,7 @@ export class MessagesComponent {
 
   overallMessages: OverallMessage[] = [];
   overallMessagesLoading = true;
+  initialLength = 0;
   messageData: Message[] = [];
   messageDataLoading = true;
   userData: UserData | null = null;
@@ -27,12 +29,17 @@ export class MessagesComponent {
   scrollBehavior = 'auto';
   isOnline: boolean = false;
   isOnlineLoading = true;
+  searchResults: UserData[] = [];
+  showSearchResults = false;
+  searchLoading = false;
+  selectedMessages: Message[] = [];
+  deleteMessagesLoading = false;
 
   constructor(
     private messageService: MessageService,
     protected userService: UserService,
     private router: Router,
-    private ngZone: NgZone
+    private profileService: ProfileService
   ) {}
 
   @ViewChild('messagesWrapper', {static: true}) messagesWrapper!: ElementRef;
@@ -43,7 +50,11 @@ export class MessagesComponent {
   }
 
   ngAfterViewChecked() {
-    this.scroll();
+    if(this.selectedMessages.length > this.initialLength){
+      this.initialLength = this.selectedMessages.length;
+      return;
+    }
+    this.scroll()
   }
 
   setUpWebSocket() {
@@ -91,11 +102,14 @@ export class MessagesComponent {
       this.messageDataLoading = false;
     }
     this.userDataLoading = true
-    this.userService.getUserDetails(this.userId).subscribe((response) => {
-      this.userData = response;
-      this.userDataLoading = false;
-    })
+    if(this.userId){
+      this.userService.getUserDetails(this.userId).subscribe((response) => {
+        this.userData = response;
+        this.userDataLoading = false;
+      })
+    }
     this.checkOnlineStatus();
+    
   }
 
   retrieveOverallMessages() {
@@ -129,6 +143,8 @@ export class MessagesComponent {
     if(response.type === 'getMoods') return this.handleGetMoods(response.messageData as Mood[])
     if(response.type === 'sendMessage') return this.handleSendMessages(response.data as Message)
     if(response.type === 'isOnline') return this.handleIsOnline(response.isOnline);
+    if(response.type === 'markSeen') return this.handleMarkseen();
+    if(response.type === 'deleteMessages') return this.handleDeleteMessages();
   }
 
   sendMessage() {
@@ -190,17 +206,45 @@ export class MessagesComponent {
   }
 
   handleGetMessages = (messageData: Message[]) => {
+    this.retrieveOverallMessages()
     this.scrollBehavior = 'auto'
     this.messageData = messageData;
     this.messageDataLoading = false;
+    this.markSeen();
   }
 
   handleSendMessages = (messageData: Message) => {
+    this.retrieveOverallMessages()
+    if(messageData.to === this.userService.userData?._id){
+      this.markSeen()
+    }
     this.scrollBehavior = 'smooth'
     this.messageData.push(messageData);
     this.sendLoading = false;
     this.currentMood = null;
     this.message = '';
+  }
+
+  markSeen() {
+    const ws = this.messageService.messageWs;
+    if(ws){
+      ws.send(
+        JSON.stringify({
+          type: this.markSeen,
+          viewedUser: this.userService.userData?._id,
+          sendUser: this.userId
+        })
+      )
+    }
+  }
+
+  handleMarkseen() {
+    for(let i = this.messageData.length - 1; i >= 0; i--){
+      if((this.messageData[i].from === this.userService.userData?._id) && this.messageData[i].seen) return;
+      if(this.messageData[i].from === this.userService.userData?._id){
+        this.messageData[i].seen = true
+      }
+    }
   }
 
   handleGetMoods = (moods: Mood[]) => {
@@ -209,6 +253,56 @@ export class MessagesComponent {
 
   handleCurrentMood (mood: Mood) {
     this.currentMood = mood;
+  }
+
+  handleSearch(keyword: string) {
+    keyword = keyword.trim()
+    if(keyword){
+      this.showSearchResults = true;
+      this.searchLoading = true;
+      this.profileService.getUsersList(keyword).subscribe((response) => {
+        this.searchResults = response.users;
+        this.searchLoading = false;
+      })
+    } else {
+      this.showSearchResults = false;
+    }
+  }
+
+  handleSelectMessage(message: Message){
+    const index = this.selectedMessages.findIndex(msg => msg._id === message._id);
+    if(index !== -1){
+      this.selectedMessages.splice(index,1)
+    } else {
+      this.selectedMessages.push(message)
+    }
+  }
+
+
+  isMessageSelected(messageId: string){
+    return this.selectedMessages.some(msg => msg._id === messageId)
+  }
+
+  deleteMessages(){
+    const ws = this.messageService.messageWs;
+    if(ws){
+      this.deleteMessagesLoading = true
+      ws.send(
+        JSON.stringify({
+          type: 'deleteMessages',
+          userId: this.userService.userData?._id,
+          messages: this.selectedMessages
+        })
+      )
+    }
+  }
+
+  handleDeleteMessages(){
+    this.messageData = this.messageData.filter(
+      msg => !this.selectedMessages.some(message => message._id === msg._id)
+    );
+    this.deleteMessagesLoading = false;
+    this.selectedMessages = []
   }
 
   scroll() {
