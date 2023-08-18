@@ -1,6 +1,7 @@
 import { Component, ElementRef, NgZone, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { MessageService } from 'src/app/services/messages/message.service';
+import { PostService } from 'src/app/services/posts/post.service';
 import { ProfileService } from 'src/app/services/profile/profile.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { Message, OverallMessage, Mood } from 'src/interfaces/message';
@@ -34,12 +35,14 @@ export class MessagesComponent {
   searchLoading = false;
   selectedMessages: Message[] = [];
   deleteMessagesLoading = false;
+  postMessagesLoading = false;
 
   constructor(
     private messageService: MessageService,
     protected userService: UserService,
     private router: Router,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    private postService: PostService
   ) {}
 
   @ViewChild('messagesWrapper', {static: true}) messagesWrapper!: ElementRef;
@@ -305,6 +308,27 @@ export class MessagesComponent {
     );
     this.deleteMessagesLoading = false;
     this.selectedMessages = []
+  }
+
+  postMessages() {
+    this.postMessagesLoading = true;
+    this.postService.addPost({
+      messages: this.selectedMessages,
+      withUserId: this.userData?._id ?? '',
+      privacy: {
+        whoCanReply: 'anyone',
+        showSeen: true,
+        showTime: true
+      }
+    }).subscribe({
+      next: response => {
+        this.selectedMessages = [];
+        alert("messages posted successfully");
+      },
+      error: error => {
+        alert("something went wrong")
+      }
+    })
   }
 
   scroll() {

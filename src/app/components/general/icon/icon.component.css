@@ -1,0 +1,21 @@
+:host {
+    display: block;
+    width: 30px;
+    height: 30px;
+}
+
+.background {
+    fill: rgb(var(--background-color));
+}
+
+.foreground {
+    fill: rgb(var(--foreground-color))
+}
+
+.background-stroke {
+    stroke: rgb(var(--background-color));
+}
+
+.foreground-stroke {
+    stroke: rgb(var(--foreground-color));
+}

@@ -11,7 +11,6 @@ export const isLoggedInGuard: CanActivateFn = async (route, state) => {
 
   if(!isVerified){
     router.navigate(['/login'])
-    return false;
   }
   return true;
 };

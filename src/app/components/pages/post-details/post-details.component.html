@@ -1,0 +1,24 @@
+<app-post-container *ngIf="post" [post]="post" ></app-post-container>
+<div *ngIf="!isRepliesPage" class="comments-container">
+    <div class="comments" #scrollContainer>
+        <app-comment *ngFor="let comment of comments" [comment]="comment" ></app-comment>
+        <app-comment *ngFor="let comment of comments" [comment]="comment" ></app-comment>
+    </div>
+    <div class="input-container">
+        <app-input [value]="comment" (onChange)="comment = $event" ></app-input>
+        <div class="send-button" (click)="addComment()" >
+            send
+        </div>
+    </div>
+</div>
+<div *ngIf="isRepliesPage" class="comments-container">
+    <div class="comments" #scrollContainer>
+        <app-comment *ngFor="let reply of replies" [comment]="reply"></app-comment>
+    </div>
+    <div class="input-container">
+        <app-input [value]="reply" (onChange)="reply = $event" ></app-input>
+        <div class="send-button" (click)="addReply()">
+            send
+        </div>
+    </div>
+</div>

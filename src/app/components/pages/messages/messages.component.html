@@ -22,14 +22,14 @@
     <div *ngIf="selectedMessages.length" class="options-wrapper">
         <app-button (onClick)="selectedMessages = []" type="option">Unselect</app-button>
         <app-button [loading]="deleteMessagesLoading" (onClick)="deleteMessages()" type="option">Delete</app-button>
-        <app-button>Post</app-button>
+        <app-button [loading]="postMessagesLoading" (onClick)="postMessages()" >Post</app-button>
     </div>
     <div class="messages-wrapper" #messagesWrapper>
         <div *ngIf="userId && !messageData.length && !messageDataLoading && !error" class="show-message">
             No messages yet!
         </div>
         <div *ngFor="let message of messageData">
-            <app-message (onClick)="handleSelectMessage($event)" [message]="message" [active]="isMessageSelected(message._id)" ></app-message>
+            <app-message [sendUser]="userService.userData?._id" (onClick)="handleSelectMessage($event)" [message]="message" [active]="isMessageSelected(message._id)" ></app-message>
         </div>
     </div>
     <div *ngIf="userId" class="send-wrapper">

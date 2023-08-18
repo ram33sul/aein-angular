@@ -1,1 +1,20 @@
-<p>edit-profile works!</p>
+<div *ngIf="userData" class="container">
+    <div class="image-container">
+        <div class="image" [ngStyle]="{'background-image': 'url('+userData.profilePicUrl+')', 'min-width': size + 'px', 'min-height': size + 'px', 'border-radius': size + 'px'}">
+            <div *ngIf="!userData.profilePicUrl" [ngStyle]="{width: (size/2.3) + 'px', height: (size/2.3) + 'px'}" class="no-image"></div>
+            <div *ngIf="!userData.profilePicUrl" [ngStyle]="{width: size + 'px', height: size + 'px'}" class="no-image"></div>
+        </div>
+    </div>
+    <div class="input-container">
+        <input placeholder="name" [(ngModel)]="userData.name" class="input">
+    </div>
+    <div class="input-container">
+        <input placeholder="bio" [(ngModel)]="userData.bio" class="input">
+    </div>
+    <label for="profileImage" class="label">Change profile image</label>
+   <input id="profileImage" name="profileImage" type="file" [(ngModel)]="profileImage" >
+   <div class="buttons-container">
+    <div class="button cancel" (click)="handleCancel()">Cancel</div>
+    <div class="button" (click)="handleSave()" >Save</div>
+   </div>
+</div>

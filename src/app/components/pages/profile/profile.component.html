@@ -45,3 +45,19 @@
         {{userData.bio}}
     </div>
 </div>
+<div *ngIf="isShareVisible" class="share-popup-container">
+    <div class="share-popup">
+        <div class="close-button" (click)="handleShare()">
+            x
+        </div>
+        <app-input placeholder="search" [value]="shareSearch" (onChange)="handleShareSearch($event)" ></app-input>
+        <div class="users-wrapper">
+            <div *ngFor="let user of shareSearchResult" class="user">
+                <app-small-profile [heading]="user.username" [subHeading]="user.name" [imageSrc]="user.profilePicUrl" ></app-small-profile>
+                <div (click)="shareProfile(user._id)" class="share-button">
+                    share
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,36 @@
+<div class="users-container" *ngIf="withUserData && userData && !loading">
+    <app-small-profile [heading]="userData.username" [subHeading]="userData.name" [imageSrc]="userData.profilePicUrl" (onClick)="navigateToProfile(userData._id)" ></app-small-profile>
+    <div class="with-username" (click)="navigateToProfile(withUserData._id)" >
+        with {{withUserData.username}}
+    </div>
+</div>
+<div class="messages-container" *ngIf="userData && !loading" (click)="navigateToPostDetails()">
+    <app-message *ngFor="let message of post.messages" [sendUser]="userData._id" [message]="message" ></app-message>
+</div>
+<div class="buttons-container" *ngIf="userData && !loading">
+    <div class="button-count" (click)="handleLike()" >
+        <app-icon [active]="post.likes.includes(userService.userData?._id ?? '')" icon="like" />
+        <div class="count">
+            {{post.likes.length}}
+        </div>
+    </div>
+    <div class="button-count" (click)="handleDislike()">
+        <app-icon icon="dislike" [active]="post.dislikes.includes(userService.userData?._id ?? '')"  />
+        <div class="count">
+            {{post.dislikes.length}}
+        </div>
+    </div>
+    <div class="button-count">
+        <app-icon icon="comment" (click)="navigateToPostDetails()" />
+        <div class="count">
+            {{post.commentsCount}}
+        </div>
+    </div>
+    <div class="button-count">
+        <app-icon icon="reply" (click)="onReplyClick()" />
+        <div class="count">
+            {{post.repliesCount}}
+        </div>
+    </div>
+</div>
+<app-loading *ngIf="loading"></app-loading>

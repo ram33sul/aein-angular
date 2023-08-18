@@ -1,6 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
+import { MessageService } from 'src/app/services/messages/message.service';
 import { ProfileService } from 'src/app/services/profile/profile.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { UserData } from 'src/interfaces/user';
@@ -16,11 +17,15 @@ export class ProfileComponent implements OnDestroy {
   loading = true;
   routerSubscription: Subscription | null = null;
   followLoading = false;
+  shareSearch = '';
+  shareSearchResult: UserData[] = [];
+  isShareVisible = false;
 
   constructor(
     private router: Router,
     protected userService: UserService,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    private messageService: MessageService
   ) {}
 
   ngOnInit() {
@@ -69,8 +74,30 @@ export class ProfileComponent implements OnDestroy {
     }
   }
 
-  handleShare(){
+  handleShareSearch(search: string) {
+    this.shareSearch = search;
+    this.profileService.getUsersList(search).subscribe({
+      next: response => {
+        this.shareSearchResult = response.users
+      }
+    })
+  }
 
+  handleShare(){
+    this.isShareVisible = !this.isShareVisible;
+  }
+
+  shareProfile(userId: string) {
+    const ws = this.messageService.messageWs;
+    if(ws && ws.OPEN){
+      ws.send(JSON.stringify({
+        type: "share",
+        userId: this.userService.userData?._id,
+        toUserId: userId,
+        content: this.userData?._id,
+        messageType: "profile"
+      }))
+    }
   }
 
   handleLogout() {

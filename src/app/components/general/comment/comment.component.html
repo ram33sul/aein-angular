@@ -1,0 +1,5 @@
+<app-small-profile *ngIf="userData && !userDataLoading" [heading]="userData.username" [subHeading]="userData.name" [imageSrc]="userData.profilePicUrl" (onClick)="navigateToProfile(userData._id)" ></app-small-profile>
+<div class="comment" *ngIf="!userDataLoading">
+    {{comment.content}}
+</div>
+<app-loading *ngIf="userDataLoading"></app-loading>

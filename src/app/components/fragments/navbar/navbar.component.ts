@@ -12,7 +12,7 @@ type Navs = typeof NavbarComponent.prototype.navs[number]
 })
 export class NavbarComponent {
 
-  navs = ['home', 'messages', 'alerts', 'settings', 'profile'] as const;
+  navs = ['home', 'messages', 'settings', 'profile'] as const;
   activePage: Navs | undefined;
   activeMarkerPos = '0';
   showActiveMarker = false;

@@ -31,4 +31,8 @@ export class ProfileService {
   getUsersList(keyword: string){
     return this.http.get<{users: UserData[]}>(`${API}/user/usersList?keyword=${keyword}`)
   }
+
+  editUserProfile(data: FormData){
+    return this.http.patch(`${API}/user/editProfile`,data)
+  }
 }

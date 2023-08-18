@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { PostService } from 'src/app/services/posts/post.service';
 import { ProfileService } from 'src/app/services/profile/profile.service';
+import { Post } from 'src/interfaces/post';
 import { UserData } from 'src/interfaces/user';
 
 @Component({
@@ -13,11 +15,28 @@ export class HomeComponent {
   searchResults: UserData[] = [];
   showSearchResults = false
   searchLoading = false;
+  posts: Post[] = [];
+  PostsLoading = true;
+  PostsError = '';
 
   constructor(
     private profileService: ProfileService,
-    private router: Router
+    private router: Router,
+    private postService: PostService
   ) {}
+
+  ngOnInit() {
+    this.postService.getPosts().subscribe({
+      next: response => {
+        this.posts = response;
+        this.PostsLoading = false;
+      },
+      error: response => {
+        this.PostsError = "Unable to load posts"
+        this.PostsLoading = false;
+      }
+    })
+  }
 
   handleSearch(keyword: string) {
     keyword = keyword.trim()

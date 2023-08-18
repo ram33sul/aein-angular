@@ -12,6 +12,7 @@ import { UserData } from 'src/interfaces/user';
 export class MessageComponent implements OnChanges {
   @Input() message!: Message;
   @Input() active = false;
+  @Input() sendUser!: string | undefined;
   @Output() onClick = new EventEmitter();
 
   type: 'send' | 'recieve' = 'send';
@@ -35,11 +36,11 @@ export class MessageComponent implements OnChanges {
 
 
   ngOnInit() {
-    if(this.userService.userData?._id === this.message.to){
+    if(this.sendUser === this.message.to){
       this.type = 'recieve';
-      this.color = this.message.mood.color ?? ''
+      this.color = this.message.mood?.color ?? ''
     } else {
-      this.backgroundColor = this.message.mood.color ?? ''
+      this.backgroundColor = this.message.mood?.color ?? ''
     }
     if(this.message.type === 'profile'){
       this.userService.getUserDetails(this.message.content).subscribe((response) => {

@@ -28,6 +28,11 @@ import { SettingsComponent } from './components/pages/settings/settings.componen
 import { ProfileComponent } from './components/pages/profile/profile.component';
 import { EditProfileComponent } from './components/pages/edit-profile/edit-profile.component';
 import { PostComponent } from './components/fragments/post/post.component';
+import { PostContainerComponent } from './components/general/post-container/post-container.component';
+import { IconComponent } from './components/general/icon/icon.component';
+import { PostDetailsComponent } from './components/pages/post-details/post-details.component';
+import { CommentComponent } from './components/general/comment/comment.component';
+import { ReplyComponent } from './components/general/reply/reply.component';
 
 const appRoutes: Routes = [
   {path: 'login', component: LoginComponent, canActivate: [isLoggedOutGuard]},
@@ -38,6 +43,7 @@ const appRoutes: Routes = [
   {path: 'settings', component: SettingsComponent, canActivate: [isLoggedInGuard]},
   {path: 'profile', component: ProfileComponent, canActivate: [isLoggedInGuard]},
   {path: 'edit-profile', component: EditProfileComponent, canActivate: [isLoggedInGuard]},
+  {path: 'post-details', component: PostDetailsComponent, canActivate: [isLoggedInGuard]},
   {path: '', component: HomeComponent, canActivate: [isLoggedInGuard]}
 ]
 
@@ -62,7 +68,11 @@ const appRoutes: Routes = [
     SettingsComponent,
     ProfileComponent,
     EditProfileComponent,
-    PostComponent
+    PostContainerComponent,
+    IconComponent,
+    PostDetailsComponent,
+    CommentComponent,
+    ReplyComponent
   ],
   imports: [
     BrowserModule,

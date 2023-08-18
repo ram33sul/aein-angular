@@ -65,3 +65,60 @@
 .bio-heading {
     opacity: 0.6;
 }
+
+.share-popup-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(128, 128, 128, 0.4);
+    padding: 5px;
+}
+
+.share-popup {
+    position: relative;
+    max-width: 500px;
+    padding: 30px;
+    background-color: rgb(var(--background-color));
+    margin: auto;
+    margin-top: 20vh;
+    border-radius: 10px;
+}
+
+.users-wrapper {
+    max-height: 300px;
+    overflow-y: scroll;
+}
+
+.users-wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+}
+
+.share-button {
+    background-color: rgb(var(--primary-color));
+    padding: 5px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.share-button:hover {
+    opacity: 0.7;
+}
+
+.close-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.close-button:hover {
+    opacity: 0.7;
+}

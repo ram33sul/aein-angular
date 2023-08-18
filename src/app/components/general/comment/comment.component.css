@@ -1,0 +1,9 @@
+:host {
+    display: block;
+    background-color: rgba(128, 128, 128, 0.2);
+    border-radius: 10px;
+}
+
+.comment {
+    padding: 0 10px 10px 10px;
+}

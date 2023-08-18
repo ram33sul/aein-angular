@@ -1,8 +1,13 @@
-<app-input (onChange)="handleSearch($event)" placeholder="Search.." />
+<div class="search-wrapper">
+    <app-input (onChange)="handleSearch($event)" placeholder="Search.." />
+</div>
 <div *ngIf="showSearchResults" class="search-results">
     <app-small-profile *ngFor="let user of searchResults" [heading]="user.username" [subHeading]="user.name" [imageSrc]="user.profilePicUrl" (onClick)="navigateToProfile(user._id)" ></app-small-profile>
     <div *ngIf="!searchResults.length" class="no-search-results">
         No results for the search.
     </div>
     <app-loading *ngIf="searchLoading" ></app-loading>
+</div>
+<div class="posts-container">
+    <app-post-container *ngFor="let post of posts" [post]="post" ></app-post-container>
 </div>
