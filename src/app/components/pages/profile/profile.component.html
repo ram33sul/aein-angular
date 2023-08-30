@@ -45,6 +45,9 @@
         {{userData.bio}}
     </div>
 </div>
+<div class="posts-container">
+    <app-post-container *ngFor="let post of posts" [post]="post" ></app-post-container>
+</div>
 <div *ngIf="isShareVisible" class="share-popup-container">
     <div class="share-popup">
         <div class="close-button" (click)="handleShare()">

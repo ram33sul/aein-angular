@@ -2,8 +2,10 @@ import { Component, OnDestroy } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { MessageService } from 'src/app/services/messages/message.service';
+import { PostService } from 'src/app/services/posts/post.service';
 import { ProfileService } from 'src/app/services/profile/profile.service';
 import { UserService } from 'src/app/services/user/user.service';
+import { Post } from 'src/interfaces/post';
 import { UserData } from 'src/interfaces/user';
 
 @Component({
@@ -20,12 +22,14 @@ export class ProfileComponent implements OnDestroy {
   shareSearch = '';
   shareSearchResult: UserData[] = [];
   isShareVisible = false;
+  posts: Post[] = [];
 
   constructor(
     private router: Router,
     protected userService: UserService,
     private profileService: ProfileService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private postService: PostService
   ) {}
 
   ngOnInit() {
@@ -39,6 +43,7 @@ export class ProfileComponent implements OnDestroy {
 
   updateUserData(url: string) {
     const userId = url.split('userId=')[1]?.split('&')[0];
+    this.updatePosts(userId ?? this.userService.userData?._id)
     if(!userId || userId === this.userService.userData?._id){
       this.userData = this.userService.userData;
       this.loading = false;
@@ -48,6 +53,15 @@ export class ProfileComponent implements OnDestroy {
       this.userData = response;
       this.loading = false;
     })
+  }
+
+  updatePosts(userId: string) {
+    this.postService.getPostsByUser(userId).subscribe({
+      next: response => {
+        this.posts = response
+      }
+    })
+
   }
 
   ngOnDestroy(){

@@ -6,10 +6,10 @@
         </div>
     </div>
     <div class="input-container">
-        <input placeholder="name" [(ngModel)]="userData.name" class="input">
+        <input placeholder="name" [formControl]="name" class="input">
     </div>
     <div class="input-container">
-        <input placeholder="bio" [(ngModel)]="userData.bio" class="input">
+        <input placeholder="bio" [formControl]="bio" class="input">
     </div>
     <label for="profileImage" class="label">Change profile image</label>
    <input id="profileImage" name="profileImage" type="file" [(ngModel)]="profileImage" >

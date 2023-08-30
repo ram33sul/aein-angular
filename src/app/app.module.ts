@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { ReactiveFormsModule } from '@angular/forms'
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/pages/login/login.component';
@@ -34,6 +35,7 @@ import { PostDetailsComponent } from './components/pages/post-details/post-detai
 import { CommentComponent } from './components/general/comment/comment.component';
 import { ReplyComponent } from './components/general/reply/reply.component';
 
+
 const appRoutes: Routes = [
   {path: 'login', component: LoginComponent, canActivate: [isLoggedOutGuard]},
   {path: 'signup', component: LoginComponent, canActivate: [isLoggedOutGuard]},
@@ -42,7 +44,7 @@ const appRoutes: Routes = [
   {path: 'alerts', component: AlertsComponent, canActivate: [isLoggedInGuard]},
   {path: 'settings', component: SettingsComponent, canActivate: [isLoggedInGuard]},
   {path: 'profile', component: ProfileComponent, canActivate: [isLoggedInGuard]},
-  {path: 'edit-profile', component: EditProfileComponent, canActivate: [isLoggedInGuard]},
+  {path: 'edit-profile', loadChildren: () => import("./modules/edit-profile-module/edit-profile-module.module").then(m => m.EditProfileModuleModule), component: EditProfileComponent, canActivate: [isLoggedInGuard]},
   {path: 'post-details', component: PostDetailsComponent, canActivate: [isLoggedInGuard]},
   {path: '', component: HomeComponent, canActivate: [isLoggedInGuard]}
 ]
@@ -67,7 +69,6 @@ const appRoutes: Routes = [
     AlertsComponent,
     SettingsComponent,
     ProfileComponent,
-    EditProfileComponent,
     PostContainerComponent,
     IconComponent,
     PostDetailsComponent,
@@ -78,7 +79,8 @@ const appRoutes: Routes = [
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    ReactiveFormsModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},],
   bootstrap: [AppComponent]
